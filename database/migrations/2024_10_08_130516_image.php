@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('image', function(Blueprint $table){
             $table->id();
             $table->string('name');
-            $table->foreignId('product_id')->constrained();
+            $table->foreignId('product_id')->constrained('product');
             $table->timestamp('create_ad');
         });
     }

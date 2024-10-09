@@ -15,7 +15,7 @@ return new class extends Migration
         $table->id();
         $table->string('description');
         $table->integer('price');
-        $table->foreignId('category_id')->constrained();
+        $table->foreignId('category_id')->constrained('category');
         $table->timestamp('create_ad');
     });
     }
