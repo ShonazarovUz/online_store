@@ -34,7 +34,7 @@ class CategoryController extends Controller
     {
         $category = Category::create([
             'name'      => $request->name,
-            'parent_id' => $request->parent_id
+            'parent' => $request->parent
         ]);
 
         return response()->json($category);
