@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Api;
+
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\UserController;
@@ -13,8 +13,10 @@ Route::get('/user', function (Request $request) {
 Route::resource('/users', UserController::class)
      ->middleware('auth:sanctum');
 
-Route::resource('/category', CategoryController::class)
+Route::resource('/categories', CategoryController::class)
      ->middleware('auth:sanctum');
 
 Route::resource('/products', ProductController::class)
      ->middleware('auth:sanctum');
+
+Route::get('/categories/{category}/products', [ProductController::class, 'getProductsByCategory']);

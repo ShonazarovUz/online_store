@@ -34,7 +34,7 @@ class CategoryController extends Controller
     {
         $category = Category::create([
             'name'      => $request->name,
-            'parent' => $request->parent
+            'parent_id' => $request->parent_id
         ]);
 
         return response()->json($category);
@@ -43,7 +43,7 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Category $categories)
+    public function show(Categories $categories)
     {
         //
     }
@@ -51,7 +51,7 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $categories)
+    public function edit(Categories $categories)
     {
         //
     }
@@ -59,7 +59,7 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update($request, Category $categories)
+    public function update(UpdateCategoriesRequest $request, Categories $categories)
     {
         //
     }
@@ -67,7 +67,7 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $categories)
+    public function destroy(Categories $categories)
     {
         //
     }

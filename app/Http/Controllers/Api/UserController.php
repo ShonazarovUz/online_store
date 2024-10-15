@@ -21,26 +21,25 @@ class UserController extends Controller
      */
     public function create()
     {
-
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\JsonResponse
     {
         $user = User::query()->create([
-            'name' => $request->name,
-            'email' => $request->email,
+            'name'     => $request->name,
+            'email'    => $request->email,
             'password' => $request->password
         ]);
 
         return response()->json([
-            'message' => 'user created successfully',
-            'status' => 'success',
-
-            'token' => $user->createToken($user->name)->plainTextToken
-    ]);
+            'message' => 'User created successfully',
+            'status'  => 'success',
+            'token'   => $user->createToken($user->name)->plainTextToken
+        ]);
     }
 
     /**
@@ -48,7 +47,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        return User::query()->FindOrFail($id);
+        return User::query()->findOrFail($id);
     }
 
     /**
