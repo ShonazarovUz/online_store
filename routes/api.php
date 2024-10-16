@@ -13,6 +13,10 @@ Route::get('/user', function (Request $request) {
 Route::resource('/users', UserController::class)
      ->middleware('auth:sanctum');
 
+
+Route::delete('/users/{user}', [UserController::class, 'destroy'])
+     ->middleware('auth:sanctum');
+
 Route::resource('/categories', CategoryController::class)
      ->middleware('auth:sanctum');
 

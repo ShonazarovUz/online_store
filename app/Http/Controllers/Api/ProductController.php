@@ -40,16 +40,31 @@ class ProductController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $product              = new Product();
-        $product->name        = $request->input('name');
-        $product->description = $request->input('description');
-        $product->price       = $request->input('price');
-        $product->category()->associate($request->input('category_id'));
-        $product->save();
+{
+    // Validatsiya
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'category_id' => 'required|exists:categories,id',
+        'description' => 'nullable|string',
+        'price' => 'nullable|numeric',
+    ]);
 
-        return $product;
-    }
+    // Ma'lumotlarni saqlash
+    $product = new Product();
+    $product->name        = $request->input('name');
+    $product->description = $request->input('description');
+    $product->price       = $request->input('price');
+
+    // Bog'lanishni o'rnatish
+    $product->category()->associate($request->input('category_id'));
+    $product->save();
+
+    return response()->json([
+        'message' => 'Product created successfully',
+        'product' => $product
+    ], 201);
+}
+
 
     /**
      * Display the specified resource.
@@ -70,9 +85,23 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(Request $request, string $id): \Illuminate\Http\JsonResponse
     {
-        //
+        $product = Product::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $product->update([
+            'name' => $request->name,
+        ]);
+
+        return response()->json([
+            'message' => 'User updated successfully',
+            'status' => 'success',
+            'data' => $product
+        ], 200);
     }
 
     /**
@@ -80,7 +109,13 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $delete = $product->delete();
+
+        if($delete){
+            return response()->json([], 204);
+        }
+
+        return response()->json(['message'=>'Resource not deleted'], 500);
     }
 
     public function getProductsByCategory($id)
