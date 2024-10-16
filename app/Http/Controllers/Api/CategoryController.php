@@ -63,16 +63,21 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Category $category)
-    {
-        $updated = $category->update([
-            'name'      => $request->name,
-            'parent_id' => $request->parent_id
-        ]);
+{
+    // Validatsiya qilish
+    $validatedData = $request->validate([
+        'name'      => 'required|string|max:255',
+        'parent_id' => 'nullable|exists:categories,id', 
+    ]);
+    $updated = $category->update($validatedData);
 
-        if ($updated) {
-            return response()->json(['name' => $category->name]);
-        }
+    if ($updated) {
+        return response()->json(['name' => $category->name]);
     }
+
+    return response()->json(['error' => 'Category update failed'], 500);
+}
+
 
     /**
      * Remove the specified resource from storage.
