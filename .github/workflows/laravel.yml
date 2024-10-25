@@ -47,9 +47,8 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          script: whoami
-  script: |
-          cd online_store
-          git pull
-          docker compose -f docker-compose.production.yml up --build -d
-          docker exec app php artisan optimize
+          script: |
+            cd online_store
+            git pull
+            docker compose -f docker-compose.production.yml up --build -d
+            docker exec app php artisan optimize
