@@ -26,8 +26,8 @@ services:
     container_name: online_store_db
     image: mysql:8  # Use MySQL version 8
     restart: always
-    ports:
-      - "3305:3306"  # Expose MySQL on port 3305
+    expose:
+      - "3306"  # Expose MySQL on port 3305
     environment:
       MYSQL_DATABASE: online_store  # Create the 'online_store' database
       MYSQL_ROOT_PASSWORD: root  # Set the root password for MySQL
